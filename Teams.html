@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> 2024 NFL Season Analytics </title>
+     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    body{ background: #FFFF; color: red; font-family: Courier; padding: 20px;} 
+    .chart-container { background: #004f7c; padding: 20px; border-radius: 8px; margin: 20px 0; }
+    .stat-row { display: flex; gap: 16px; margin: 20px 0;}
+    .stat-card { background: #004f7c; border-radius: 8px; padding: 20px; flex: 1; text-align: center;}        .stat-number { font-size: 48px; font-weight: bold; color: #00b140;}
+    .stat-label { font-size: 14px; color: #a5acaf; margin-top: 8px;}
+</style>
+</head>
+
+<body>
+    <div class = "team-grid">
+        <div class="team-card" onclick="selectTeam('PHI')">
+            <img src ="https://a.espncdn.com/i/teamlogos/nfl/500/phi.png">  
+            <p>Philadelphia Eagles</p>
+        </div>
+        <div class="team-card" onclick="selectTeam('DAL')">
+            <img src ="https://a.espncdn.com/i/teamlogos/nfl/500/dal.png">  
+            <p>Dallas Cowboys</p>
+        </div>
+        <div class="team-card" onclick="selectTeam('WAS')">
+            <img src ="https://a.espncdn.com/i/teamlogos/nfl/500/was.png">  
+            <p>Washington Commanders</p>
+        </div>
+        <div class="team-card" onclick="selectTeam('NYG')">
+            <img src ="https://a.espncdn.com/i/teamlogos/nfl/500/nyg.png">  
+            <p>New York Giants</p>
+        </div>
+        <div class="team-card" onclick="selectTeam('NE')">
+            <img src ="https://a.espncdn.com/i/teamlogos/nfl/500/ne.png">  
+            <p>New England Patriots</p>
+        </div>
+        <div class="team-card" onclick="selectTeam('MIA')">
+            <img src ="https://a.espncdn.com/i/teamlogos/nfl/500/mia.png">  
+            <p>Miami Dolphins</p>
+        </div>
+        <div class="team-card" onclick="selectTeam('BUF')">
+            <img src ="https://a.espncdn.com/i/teamlogos/nfl/500/buf.png">  
+            <p>Buffalo Bills</p>
+        </div>
+        <div class="team-card" onclick="selectTeam('NYJ')">
+            <img src ="https://a.espncdn.com/i/teamlogos/nfl/500/nyj.png">  
+            <p>New York Jets</p>
+        </div>
+        <div class="team-card" onclick="selectTeam('LAR')">
+            <img src ="https://a.espncdn.com/i/teamlogos/nfl/500/lar.png">  
+            <p>Los Angeles Rams</p>
+        </div>
+         <div class="team-card" onclick="selectTeam('SF')">
+            <img src ="https://a.espncdn.com/i/teamlogos/nfl/500/sf.png">  
+            <p>San Francisco 49ers</p>
+        </div>
+         <div class="team-card" onclick="selectTeam('SEA')">
+            <img src ="https://a.espncdn.com/i/teamlogos/nfl/500/sea.png">  
+            <p>Seattle Seahawks</p>
+        </div>
+         <div class="team-card" onclick="selectTeam('ARI')">
+            <img src ="https://a.espncdn.com/i/teamlogos/nfl/500/ari.png">  
+            <p>Arizona Cardinals</p>
+        </div>
+         <div class="team-card" onclick="selectTeam('KC')">
+            <img src ="https://a.espncdn.com/i/teamlogos/nfl/500/kc.png">  
+            <p>Kansas City Chiefs</p>
+        </div>
+         <div class="team-card" onclick="selectTeam('LAC')">
+            <img src ="https://a.espncdn.com/i/teamlogos/nfl/500/lac.png">  
+            <p>Los Angeles Chargers</p>
+        </div>
+         <div class="team-card" onclick="selectTeam('LV')">
+            <img src ="https://a.espncdn.com/i/teamlogos/nfl/500/lv.png">  
+            <p>Las Vegas Raiders</p>
+        </div>
+         <div class="team-card" onclick="selectTeam('DEN')">
+            <img src ="https://a.espncdn.com/i/teamlogos/nfl/500/den.png">  
+            <p>Denver Broncos</p>
+        </div>
+         <div class="team-card" onclick="selectTeam('CHI')">
+            <img src ="https://a.espncdn.com/i/teamlogos/nfl/500/chi.png">  
+            <p>Chicago Bears</p>
+        </div>
+         <div class="team-card" onclick="selectTeam('GB')">
+            <img src ="https://a.espncdn.com/i/teamlogos/nfl/500/gb.png">  
+            <p>Green Bay Packers</p>
+        </div>
+         <div class="team-card" onclick="selectTeam('DET')">
+            <img src ="https://a.espncdn.com/i/teamlogos/nfl/500/det.png">  
+            <p>Detroit Lions</p>
+        </div>
+         <div class="team-card" onclick="selectTeam('MIN')">
+            <img src ="https://a.espncdn.com/i/teamlogos/nfl/500/min.png">  
+            <p>Minnesota Vikings</p>
+        </div>
+         <div class="team-card" onclick="selectTeam('BAL')">
+            <img src ="https://a.espncdn.com/i/teamlogos/nfl/500/bal.png">  
+            <p>Baltimore Ravens</p>
+        </div>
+         <div class="team-card" onclick="selectTeam('PIT')">
+            <img src ="https://a.espncdn.com/i/teamlogos/nfl/500/pit.png">  
+            <p>Pittsburgh Steelers</p>
+        </div>
+         <div class="team-card" onclick="selectTeam('CLE')">
+            <img src ="https://a.espncdn.com/i/teamlogos/nfl/500/cle.png">  
+            <p>Cleveland Browns</p>
+        </div>
+         <div class="team-card" onclick="selectTeam('CIN')">
+            <img src ="https://a.espncdn.com/i/teamlogos/nfl/500/cin.png">  
+            <p>Cincinnati Bengals</p>
+        </div>
+         <div class="team-card" onclick="selectTeam('CAR')">
+            <img src ="https://a.espncdn.com/i/teamlogos/nfl/500/car.png">  
+            <p>Carolina Panthers</p>
+        </div>
+         <div class="team-card" onclick="selectTeam('TB')">
+            <img src ="https://a.espncdn.com/i/teamlogos/nfl/500/tb.png">  
+            <p>Tampa Bay Buccaneers</p>
+        </div>
+         <div class="team-card" onclick="selectTeam('NO')">
+            <img src ="https://a.espncdn.com/i/teamlogos/nfl/500/no.png">  
+            <p>New Orleans Saints</p>
+        </div>
+         <div class="team-card" onclick="selectTeam('ATL')">
+            <img src ="https://a.espncdn.com/i/teamlogos/nfl/500/atl.png">  
+            <p>Atlanta Falcons</p>
+        </div>
+         <div class="team-card" onclick="selectTeam('JAX')">
+            <img src ="https://a.espncdn.com/i/teamlogos/nfl/500/jax.png">  
+            <p>Jacksonville Jaguars</p>
+        </div>
+         <div class="team-card" onclick="selectTeam('IND')">
+            <img src ="https://a.espncdn.com/i/teamlogos/nfl/500/ind.png">  
+            <p>Indianapolis Colts</p>
+        </div>
+         <div class="team-card" onclick="selectTeam('HOU')">
+            <img src ="https://a.espncdn.com/i/teamlogos/nfl/500/hou.png">  
+            <p>Houston Texans</p>
+        </div>
+         <div class="team-card" onclick="selectTeam('TEN')">
+            <img src ="https://a.espncdn.com/i/teamlogos/nfl/500/ten.png">  
+            <p>Tennessee Titans</p>
+        </div>
+        
+
+    </div>
+   
+
+    <div id="dashboard-view" style="display:none;">
+         <div class="chart-container">
+        <canvas id="scoresChart"></canvas>
+    </div>
+
+    <div class="stat-row">
+         <div class="stat-card">
+            <div class="stat-number" id="avg-scored">-</div>
+            <div class="stat-label">Avg Points Scored</div>
+        </div>
+        <div class="stat-card">
+             <div class="stat-number" id="avg-allowed">-</div>
+             <div class="stat-label">Avg Points Allowed</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="win-pct">-</div>
+            <div class="stat-label">Win %</div>
+        </div>
+    </div>
+
+    <div class="chart-container">
+        <h2> Home vs Away</h2>
+        <canvas id="homeAwayChart"></canvas>
+
+    </div>
+
+    <div class="chart-container" id="record">
+    <h2>Season Record</h2>
+    <p id="record-text"></p>
+    </div>
+
+    <div class="chart-container">
+    <canvas id="winLossChart"></canvas>
+    </div>
+
+ <script src="Team.js"></script>
+</body>
+
+
+
+
+
+
+
+
+</html>

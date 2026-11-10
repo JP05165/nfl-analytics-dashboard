@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Eagles 2024 Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { background: #003b5c; color: white; font-family: Arial; padding: 20px; }
+        h1 { color: #a5acaf; }
+        .chart-container { background: #004f7c; padding: 20px; border-radius: 8px; margin: 20px 0; }
+        .stat-row { display: flex; gap: 16px; margin: 20px 0;}
+        .stat-card { background: #004f7c; border-radius: 8px; padding: 20px; flex: 1; text-align: center;}
+        .stat-number { font-size: 48px; font-weight: bold; color: #00b140;}
+        .stat-label { font-size: 14px; color: #a5acaf; margin-top: 8px;}
+    </style>
+</head>
+<body>
+    <h1> 🦅 Philadelphia Eagles 2024 Season</h1>
+    <div class="chart-container">
+        <canvas id="scoresChart"></canvas>
+    </div>
+
+    <div class="stat-row">
+         <div class="stat-card">
+            <div class="stat-number" id="avg-scored">-</div>
+            <div class="stat-label">Avg Points Scored</div>
+        </div>
+        <div class="stat-card">
+             <div class="stat-number" id="avg-allowed">-</div>
+             <div class="stat-label">Avg Points Allowed</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="win-pct">-</div>
+            <div class="stat-label">Win %</div>
+        </div>
+    </div>
+
+    <div class="chart-container">
+        <h2> Home vs Away</h2>
+        <canvas id="homeAwayChart"></canvas>
+
+    </div>
+
+    <div class="chart-container" id="record">
+    <h2>Season Record</h2>
+    <p id="record-text"></p>
+    </div>
+
+    <div class="chart-container">
+    <canvas id="winLossChart"></canvas>
+    </div>
+    <script>
+        fetch('http://127.0.0.1:5002/api/scores')
+            .then(r => r.json())
+            .then(data => {
+                const weeks = data.map(g => 'Wk' + g.week + ' ' + g.opponent);
+                const eaglesScores = data.map(g => g.eagles_score);
+                const oppScores = data.map(g => g.opp_score);
+                const wins = data.filter(g => g.result === 'W').length;
+                const losses = data.filter(g => g.result === 'L').length;
+                document.getElementById('record-text').innerText = wins + ' - ' + losses;
+                const avgScored = (data.reduce((sum, g) => sum + g.eagles_score, 0) / data.length).toFixed(1);
+                const avgallowed = (data.reduce((sum, g) => sum + g.opp_score, 0) / data.length).toFixed(1);
+                const winPct = ((wins / data.length) * 100).toFixed(1) + '%';
+                document.getElementById('avg-scored').innerText = avgScored
+                document.getElementById('avg-allowed').innerText = avgallowed
+                document.getElementById('win-pct').innerText = winPct
+                new Chart(document.getElementById("winLossChart"), {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Wins', 'Losses'],
+                        datasets: [{
+                            data: [wins, losses],
+                            backgroundColor: ['#00b140', '#a5acaf']
+                        }]
+                    }
+                });
+                new Chart(document.getElementById('scoresChart'), {
+                    type: 'bar',
+                    data: {
+                        labels: weeks,
+                        datasets: [
+                            { label: 'Eagles', data: eaglesScores, backgroundColor: '#00b140'}, 
+                            { label: 'Opponent', data: oppScores, backgroundColor: '#a5acaf'}
+                        ]
+                    }
+                });
+            });
+            fetch('http://127.0.0.1:5002/api/home_away')
+            .then(r => r.json())
+            .then(data => {
+                new Chart(document.getElementById('homeAwayChart'), 
+                {type: 'bar', 
+                data: {labels: ['Wins', 'Losses', 'Avg Scored', 'Avg Allowed'], 
+                datasets: [ 
+                    {
+                        label: 'Home', data: [data.home.wins, data.home.losses, data.home.avg_scored, data.home.avg_allowed],
+                        backgroundColor: '#00b140'
+                    },
+                    {
+                        label: 'Away', data: [data.away.wins, data.away.losses, data.away.avg_scored, data.away.avg_allowed],
+                        backgroundColor: '#a5acaf'
+                    }
+                ]
+            }
+        });
+
+    });
+    </script>
+</body>
+</html>
