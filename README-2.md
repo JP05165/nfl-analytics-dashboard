@@ -2,7 +2,7 @@
 
 A web dashboard that pulls real NFL game data and shows any team's 2024 season at a glance: score for every game, win/loss record, and home vs. away performance.
 
-<!-- Add a sentence or two in your own words: why you built this. -->
+I decided to build an NFL Analytics Dashboard because I wanted to experience how data is converted from documents into charts using tools in Python. I learned a lot of data visualization from this project and how to tweak certain functions in order to produce the graphs that you like. 
 
 ## How it works
 
